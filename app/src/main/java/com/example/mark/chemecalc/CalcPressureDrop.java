@@ -1,20 +1,17 @@
 package com.example.mark.chemecalc;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import org.jetbrains.annotations.Nullable;
 
-public class CalcReynolds extends CalcPage {
+public class CalcPressureDrop extends CalcPage {
 
-    public static final String title = "Reynolds Number";
-    public final String description = "Reynolds Number = (Density * Diameter * Velocity) / Viscosity";
+    public static final String title = "Pressure Drop";
+    public final String description = "Calculate the Pressure Drop of a fluid within a pipe";
 
     public String calculate()
     {
@@ -43,7 +40,7 @@ public class CalcReynolds extends CalcPage {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        View this_view = createView(inflater, R.layout.calc_reynolds, container, savedInstanceState);
+        View this_view = createView(inflater, R.layout.calc_pressure_drop, container, savedInstanceState);
         TextView descriptionView = (TextView) this_view.findViewById(R.id.description);
         descriptionView.setText(description);
         return this_view;

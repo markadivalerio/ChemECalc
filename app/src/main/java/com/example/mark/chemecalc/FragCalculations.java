@@ -18,23 +18,27 @@ public class FragCalculations extends Fragment implements OnClickListener{
 
     @Override
     public void onClick(View v) {
-        Fragment calc_frag = null;
-        String title = "Calculations";
+        CalcPage calc_page = null;
+        String this_title = "Calculation";
         switch(v.getId())
         {
-            case R.id.reynoldsButton:
-                calc_frag = new CalcReynolds();
-                title = CalcReynolds.title;
+            case R.id.calcButton_reynoldsNumber:
+                calc_page = new CalcReynolds();
+                this_title = CalcReynolds.title;
+                break;
+            case R.id.calcButton_pressureDrop:
+                calc_page = new CalcPressureDrop();
+                this_title = CalcPressureDrop.title;
                 break;
         }
 
-        if(calc_frag != null)
+        if(calc_page != null)
         {
-            // TODO: Set back button
+            // TODO: Set back button to go back to FragCalulations page
             getFragmentManager().beginTransaction().replace(
                     R.id.fragment_container,
-                    calc_frag).commit();
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
+                    calc_page).commit();
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(this_title);
         }
     }
 
@@ -44,8 +48,7 @@ public class FragCalculations extends Fragment implements OnClickListener{
     {
         View thisView = inflater.inflate(R.layout.frag_calculations, container, false);
 
-        ArrayList<View> allButtons;
-        allButtons = ((ConstraintLayout) thisView.findViewById(R.id.calculations_layout)).getTouchables();
+        ArrayList<View> allButtons = ((ConstraintLayout) thisView.findViewById(R.id.calculations_layout)).getTouchables();
 
         for(View btnView: allButtons)
         {

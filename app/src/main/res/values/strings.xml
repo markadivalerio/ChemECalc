@@ -5,4 +5,80 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
+
+    <string-array name="units_speed">
+        <item>m/s</item>
+        <item>in/s</item>
+        <item>mph</item>
+    </string-array>
+
+    <string-array name="units_distance">
+        <item>cm</item>
+        <item>m</item>
+        <item>in</item>
+        <item>ft</item>
+        <item>mi</item>
+        <item>naut mi</item>
+    </string-array>
+
+    <string-array name="units_density">
+        <item>kg/m^3</item>
+        <item>lb/ft^3</item>
+    </string-array>
+
+    <string-array name="units_viscosity">
+        <item>Ns/m^2</item>
+        <item>cP</item>
+    </string-array>
+
+    <string-array name="sched">
+        <item>Custom</item>
+        <item>5</item>
+        <item>10</item>
+        <item>40</item>
+        <item>80</item>
+        <item>160</item>
+        <item>Tube</item>
+        <item>PP-Lined</item>
+        <item>PTFE-Lined</item>
+    </string-array>
+
+    <string-array name="nominal_size">
+        <item>Custom</item>
+        <item>0.5</item>
+        <item>0.75</item>
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+        <item>2.5</item>
+        <item>3</item>
+        <item>4</item>
+        <item>6</item>
+        <item>8</item>
+        <item>10</item>
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>20</item>
+        <item>22</item>
+        <item>24</item>
+    </string-array>
+
+    <string-array name="pipe_fittings">
+        <item>Custom</item>
+        <item>Elbow-45</item>
+        <item>Elbow-90</item>
+        <item>Tees-Through</item>
+        <item>Tees-Branch</item>
+        <item>Ball Valve</item>
+        <item>Butterfly Valve</item>
+        <item>Gate Valve</item>
+        <item>Globe Valve</item>
+        <item>Check Valve</item>
+        <item>Plug Valve</item>
+        <item>Pipe Entrance</item>
+        <item>Pipe Exit</item>
+        <item>Linear Ft of Pipe</item>
+    </string-array>
 </resources>

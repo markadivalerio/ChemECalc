@@ -7,17 +7,34 @@
         android:layout_height="match_parent" android:id="@+id/calculations_layout">
 
     <Button
-            android:text="Reynolds Number"
+            android:text="Pressure Drop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/reynoldsButton" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/toggleFavReynolds" android:layout_marginStart="8dp"/>
+            android:id="@+id/calcButton_pressureDrop" android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/toggleFav_pessureDrop" android:layout_marginStart="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/calcButton_reynoldsNumber"/>
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@drawable/ic_menu_favorites"
-            android:id="@+id/toggleFavReynolds"
+            android:id="@+id/toggleFav_pessureDrop"
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="Add To Favorites"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@+id/calcButton_pressureDrop"
+            app:layout_constraintBottom_toBottomOf="@+id/calcButton_pressureDrop"/>
+    <Button
+            android:text="Reynolds Number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/calcButton_reynoldsNumber" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/toggleFav_reynoldsNumber" android:layout_marginStart="8dp"/>
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/ic_menu_favorites"
+            android:id="@+id/toggleFav_reynoldsNumber"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="Add To Favorites"/>
+            android:contentDescription="Add To Favorites"
+            app:layout_constraintBottom_toBottomOf="@+id/calcButton_reynoldsNumber"
+            app:layout_constraintTop_toTopOf="@+id/calcButton_reynoldsNumber"/>
 </android.support.constraint.ConstraintLayout>

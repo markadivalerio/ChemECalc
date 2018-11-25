@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class CalcPage extends Fragment implements TextWatcher {
 
     public static final String title = "Calculations";
+    public String description = "";
     private TextView resultText;
 
     public void onTextChanged(CharSequence s, int start, int before, int count)
@@ -41,16 +42,18 @@ public class CalcPage extends Fragment implements TextWatcher {
 
     public String calculate()
     {
-        return "Test";
+        return "No Calculation Found";
     }
 
     public View createView(LayoutInflater inflater, Integer layoutId, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View this_view = inflater.inflate(layoutId, container, false);
+
+
         resultText = (TextView)this_view.findViewById(R.id.resultText);
 
 //        ArrayList<EditText> editTextFields = new ArrayList<EditText>();
         //getAllChildren(this_view);
-        ConstraintLayout layout = (ConstraintLayout)this_view.findViewById(R.id.calc_layout);
+        ConstraintLayout layout = (ConstraintLayout)this_view.findViewById(R.id.calc_layout_wrapper);
         for(int i=0; i < layout.getChildCount(); i++)
         {
             if(layout.getChildAt(i) instanceof EditText) {
@@ -59,6 +62,8 @@ public class CalcPage extends Fragment implements TextWatcher {
 //                editTextFields.add((EditText))
             }
         }
+
+
         return this_view;
     }
 }
