@@ -11,13 +11,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import org.jetbrains.annotations.Nullable;
 
-public class CalcReynolds extends Fragment implements View.OnClickListener {
-    Button calcButton;
-    TextView resultText;
+public class CalcReynolds extends CalcPage {
 
-    public void onClick(View v)
+    public static final String title = "Reynolds Number";
+
+
+    public String calculate()
     {
-        if(v == calcButton) {
+        try
+        {
             EditText input1 = (EditText)getView().findViewById(R.id.editText1); // density
             EditText input2 = (EditText)getView().findViewById(R.id.editText2); // diameter
             EditText input3 = (EditText)getView().findViewById(R.id.editText3); // velocity
@@ -28,7 +30,11 @@ public class CalcReynolds extends Fragment implements View.OnClickListener {
             double viscosity = Double.parseDouble(input4.getText().toString());
 
             double resultDouble = (density * diameter * velocity) / viscosity;
-            resultText.setText(Double.toString(resultDouble)); // Reynolds Number
+            return Double.toString(resultDouble);
+        }
+        catch(Exception e)
+        {
+            return "Error: "+e.getMessage();
         }
     }
 
@@ -37,12 +43,7 @@ public class CalcReynolds extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        View this_view = inflater.inflate(R.layout.calc_reynolds, container, false);
-
-        calcButton = (Button)this_view.findViewById(R.id.calcButton);
-        resultText = (TextView)this_view.findViewById(R.id.resultText);
-
-        calcButton.setOnClickListener(this);
+        View this_view = createView(inflater, R.layout.calc_reynolds, container, savedInstanceState);
 
         return this_view;
     }

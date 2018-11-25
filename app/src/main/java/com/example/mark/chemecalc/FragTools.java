@@ -9,6 +9,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class FragTools extends Fragment {
 
+    public static final String title = "Tools";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)

@@ -9,6 +9,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class FragHistory extends Fragment {
 
+    public static final String title = "History";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
