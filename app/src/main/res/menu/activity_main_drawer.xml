@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+    <item
+            android:id="@+id/search_formulas"
+            android:title="Search Formulas"
+            app:actionViewClass="android.widget.SearchView"
+            android:enabled="true"
+            android:visible="true"
+            android:icon="@drawable/ic_search"/>
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_calculations"
+                android:icon="@drawable/ic_menu_calculations"
+                android:title="Calculations"/>
+        <item
+                android:id="@+id/nav_favorites"
+                android:icon="@drawable/ic_menu_favorites"
+                android:title="Favorites"/>
+        <item
+                android:id="@+id/nav_history"
+                android:icon="@drawable/ic_menu_history"
+                android:title="History"/>
+        <item
+                android:id="@+id/nav_tools"
+                android:icon="@drawable/ic_menu_tools"
+                android:title="Tools"/>
+        <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_menu_settings"
+                android:title="Settings"/>
+    </group>
+</menu>
