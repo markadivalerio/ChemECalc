@@ -4,37 +4,52 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import org.jetbrains.annotations.Nullable;
 
-public class CalcPressureDrop extends CalcPage {
+import java.util.HashMap;
+
+public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSelectedListener {
 
     public static final String title = "Pressure Drop";
     public final String description = "Calculate the Pressure Drop of a fluid within a pipe";
 
-    public String calculate()
-    {
-        try
-        {
-            EditText input1 = (EditText)getView().findViewById(R.id.editText1); // density
-            EditText input2 = (EditText)getView().findViewById(R.id.editText2); // diameter
-            EditText input3 = (EditText)getView().findViewById(R.id.editText3); // velocity
-            EditText input4 = (EditText)getView().findViewById(R.id.editText4); // viscosity
-            double density = Double.parseDouble(input1.getText().toString());
-            double diameter = Double.parseDouble(input2.getText().toString());
-            double velocity = Double.parseDouble(input3.getText().toString());
-            double viscosity = Double.parseDouble(input4.getText().toString());
+    public HashMap<String, HashMap<String, String>> actualDiamRef = new HashMap<String, HashMap<String, String>>();
+    protected Adapter initializedAdapter=null;
 
-            double resultDouble = (density * diameter * velocity) / viscosity;
-            return Double.toString(resultDouble);
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if(initializedAdapter !=parent.getAdapter() ) {
+            initializedAdapter = parent.getAdapter();
+            return;
         }
-        catch(Exception e)
+        switch(parent.getId())
         {
-            return "Error: "+e.getMessage();
+            case R.id.spinner1:
+                //sched
+                break;
+            case R.id.spinner2:
+                // nomSz
+                break;
         }
     }
 
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    public String calculate()
+    {
+        return "No Calculation Yet";
+    }
+
+    public void loadAssets() {
+        actualDiamRef = loadReferenceCSV("actual_diameter_reference.csv");
+    }
 
     @Nullable
     @Override
@@ -43,6 +58,15 @@ public class CalcPressureDrop extends CalcPage {
         View this_view = createView(inflater, R.layout.calc_pressure_drop, container, savedInstanceState);
         TextView descriptionView = (TextView) this_view.findViewById(R.id.description);
         descriptionView.setText(description);
+        loadAssets();
+
+        Spinner sched = (Spinner) this_view.findViewById((R.id.spinner1));
+        sched.setOnItemSelectedListener(this);
+
+        Spinner nomSz = (Spinner) this_view.findViewById(R.id.spinner2);
+        nomSz.setOnItemSelectedListener(this);
+
+
         return this_view;
     }
 }

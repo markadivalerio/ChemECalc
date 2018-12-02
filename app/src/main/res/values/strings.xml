@@ -32,7 +32,7 @@
     </string-array>
 
     <string-array name="sched">
-        <item>Custom</item>
+        <item>Sched</item>
         <item>5</item>
         <item>10</item>
         <item>40</item>
@@ -44,7 +44,7 @@
     </string-array>
 
     <string-array name="nominal_size">
-        <item>Custom</item>
+        <item>Nom Sz</item>
         <item>0.5</item>
         <item>0.75</item>
         <item>1</item>
