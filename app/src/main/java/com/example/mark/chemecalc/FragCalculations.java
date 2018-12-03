@@ -34,10 +34,9 @@ public class FragCalculations extends Fragment implements OnClickListener{
 
         if(calc_page != null)
         {
-            // TODO: Set back button to go back to FragCalulations page
             getFragmentManager().beginTransaction().replace(
                     R.id.fragment_container,
-                    calc_page).commit();
+                    calc_page).addToBackStack("FragCalculations").commit();
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(this_title);
         }
     }

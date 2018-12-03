@@ -24,16 +24,19 @@ public class CalcPage extends Fragment implements TextWatcher {
     public String description = "";
     private TextView resultText;
 
+    @Override
     public void onTextChanged(CharSequence s, int start, int before, int count)
     {
 
     }
 
+    @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after)
     {
 
     }
 
+    @Override
     public void afterTextChanged(Editable s)
     {
         performCalculation();
@@ -79,10 +82,9 @@ public class CalcPage extends Fragment implements TextWatcher {
     public View createView(LayoutInflater inflater, Integer layoutId, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View this_view = inflater.inflate(layoutId, container, false);
 
-
         resultText = (TextView)this_view.findViewById(R.id.resultText);
 
-        ConstraintLayout layout = (ConstraintLayout)this_view.findViewById(R.id.calc_layout_wrapper);
+        ConstraintLayout layout = (ConstraintLayout)this_view.findViewById(R.id.calcConstraintLayoutWrapper);
         for(int i=0; i < layout.getChildCount(); i++)
         {
             if(layout.getChildAt(i) instanceof EditText) {

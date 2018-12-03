@@ -3,38 +3,39 @@
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
-                                             android:layout_height="match_parent" android:id="@+id/calc_layout_wrapper"
+                                             android:layout_height="match_parent"
+                                             android:id="@+id/calcConstraintLayoutWrapper"
                                              android:visibility="visible" android:minHeight="1dp"
                                              tools:layout_editor_absoluteY="81dp">
 
     <Spinner
             android:layout_width="150dp"
             android:layout_height="0dp"
-            android:id="@+id/spinner2"
-            app:layout_constraintStart_toEndOf="@+id/editText4"
-            android:layout_marginStart="8dp"
+            android:id="@+id/viscSpinner"
             android:textSize="12sp" android:entries="@array/units_viscosity"
-            app:layout_constraintBottom_toBottomOf="@+id/editText4" app:layout_constraintTop_toTopOf="@+id/editText4"/>
+            app:layout_constraintTop_toTopOf="@+id/viscEditText"
+            app:layout_constraintStart_toEndOf="@+id/viscEditText" android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/viscEditText"/>
     <Spinner
             android:layout_width="150dp"
             android:layout_height="0dp"
-            android:id="@+id/spinner1"
-            app:layout_constraintStart_toEndOf="@+id/editText3"
-            android:layout_marginStart="8dp"
+            android:id="@+id/velocitySpinner"
             android:entries="@array/units_speed"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/editText3" app:layout_constraintTop_toTopOf="@+id/editText3"/>
+            app:layout_constraintTop_toTopOf="@+id/velocityEditText"
+            app:layout_constraintBottom_toBottomOf="@+id/velocityEditText"
+            app:layout_constraintStart_toEndOf="@+id/velocityEditText" android:layout_marginStart="8dp"/>
     <Spinner
             android:layout_width="150dp"
             android:layout_height="0dp"
-            android:id="@+id/spinner2"
-            app:layout_constraintStart_toEndOf="@+id/editText2"
-            android:layout_marginStart="8dp"
+            android:id="@+id/diamSpinner"
             android:entries="@array/units_distance"
             android:textSize="12sp"
-            app:layout_constraintTop_toTopOf="@+id/editText2" app:layout_constraintBottom_toBottomOf="@+id/editText2"/>
+            app:layout_constraintTop_toTopOf="@+id/diamEditText"
+            app:layout_constraintBottom_toBottomOf="@+id/diamEditText"
+            app:layout_constraintStart_toEndOf="@+id/diamEditText" android:layout_marginStart="8dp"/>
     <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/densEditText"
             android:layout_width="150dp"
             android:layout_height="36dp"
             android:layout_marginStart="8dp"
@@ -45,37 +46,36 @@
             android:layout_marginTop="8dp"/>
 
     <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/diamEditText"
             android:layout_width="150dp"
             android:layout_height="36dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="numberDecimal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText1" android:hint="Diameter" android:textSize="12sp"/>
+            android:hint="Diameter" android:textSize="12sp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/densEditText"
+            android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/velocityEditText"
             android:layout_width="150dp"
             android:layout_height="36dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="numberDecimal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText2" android:hint="Velocity" android:textSize="12sp"/>
+            android:hint="Velocity"
+            android:textSize="12sp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/diamEditText" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/viscEditText"
             android:layout_width="150dp"
             android:layout_height="36dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="numberDecimal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText3" android:hint="Viscosity" android:textSize="12sp"/>
+            android:hint="Viscosity" android:textSize="12sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/velocityEditText" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     <View
             android:id="@+id/divider"
@@ -93,10 +93,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintStart_toEndOf="@+id/resultLabel"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:textStyle="bold" app:layout_constraintHorizontal_bias="0.139"
-            android:layout_marginTop="100dp" app:layout_constraintTop_toBottomOf="@+id/editText4"/>
+            android:textStyle="bold" app:layout_constraintHorizontal_bias="0.265"
+            app:layout_constraintTop_toTopOf="@+id/resultLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/resultLabel" app:layout_constraintVertical_bias="0.0"/>
     <TextView
             android:text="Description"
             android:layout_width="0dp"
@@ -108,17 +109,19 @@
     <Spinner
             android:layout_width="150dp"
             android:layout_height="0dp"
-            android:id="@+id/spinner1"
+            android:id="@+id/densSpinner"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/editText1" android:layout_marginStart="8dp"
             android:entries="@array/units_density"
-            app:layout_constraintTop_toTopOf="@+id/editText1" app:layout_constraintBottom_toBottomOf="@+id/editText1"/>
+            app:layout_constraintTop_toTopOf="@+id/densEditText"
+            app:layout_constraintStart_toEndOf="@+id/densEditText" android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/densEditText"/>
     <TextView
             android:text="Re. No. ="
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView4"
+            android:id="@+id/resultLabel"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="92dp" android:textStyle="bold" android:layout_marginTop="100dp"
-            app:layout_constraintTop_toBottomOf="@+id/editText4"/>
+            android:layout_marginStart="60dp" android:textStyle="bold"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/viscEditText"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
 </android.support.constraint.ConstraintLayout>

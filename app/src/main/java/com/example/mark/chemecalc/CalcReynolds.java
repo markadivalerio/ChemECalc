@@ -1,12 +1,9 @@
 package com.example.mark.chemecalc;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import org.jetbrains.annotations.Nullable;
@@ -20,10 +17,10 @@ public class CalcReynolds extends CalcPage {
     {
         try
         {
-            EditText input1 = (EditText)getView().findViewById(R.id.editText1); // density
-            EditText input2 = (EditText)getView().findViewById(R.id.editText2); // diameter
-            EditText input3 = (EditText)getView().findViewById(R.id.editText3); // velocity
-            EditText input4 = (EditText)getView().findViewById(R.id.editText4); // viscosity
+            EditText input1 = (EditText)getView().findViewById(R.id.flowEditText); // density
+            EditText input2 = (EditText)getView().findViewById(R.id.specGravEditText); // diameter
+            EditText input3 = (EditText)getView().findViewById(R.id.viscEditText); // velocity
+            EditText input4 = (EditText)getView().findViewById(R.id.actualDiamEditText); // viscosity
             double density = Double.parseDouble(input1.getText().toString());
             double diameter = Double.parseDouble(input2.getText().toString());
             double velocity = Double.parseDouble(input3.getText().toString());
