@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,7 @@ import android.widget.*;
 import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Text;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSelectedListener {
 
@@ -67,6 +66,8 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
     public void afterTextChanged(Editable s)
     {
          View thisView = getActivity().getCurrentFocus();
+         if(thisView == null)
+             return;
          switch(thisView.getId())
          {
              case R.id.actualDiamEditText:
@@ -106,6 +107,23 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
 //        ArrayAdapter<String> adp= new ArrayAdapter<String>(getActivity(), R.layout.calc_pressure_drop, fittingNames);
 //        adp.setDropDownViewResource(R.layout.calc_pressure_drop);
 //        fittingsSpinner.setAdapter(adp);
+
+        if(fittingsRef.isEmpty())
+        {
+            loadAssets();
+        }
+        List<String> fittingOptions = new ArrayList<String>(fittingsRef.keySet());
+        Collections.sort(fittingOptions);
+        fittingOptions.add(0,"Custom");
+        fittingOptions.add(0,"Fittings");
+
+        ArrayAdapter<String> spinnerArrayAdapter =
+                new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, fittingOptions);
+
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        Spinner spinner = (Spinner)thisView.findViewById(R.id.fittingsSpinner);
+        spinner.setAdapter(spinnerArrayAdapter);
     }
 
     public void initTable(View thisView)
@@ -114,44 +132,33 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
         FragmentActivity activity = getActivity();
 
         TableRow headerRow = new TableRow(activity);
-//        fittingsTable.setLayoutParams(new TableLayout.LayoutParams(
-//                TableLayout.LayoutParams.MATCH_PARENT,
-//                TableLayout.LayoutParams.MATCH_PARENT));
-//
-//        TableRow.LayoutParams cellLayout = new TableRow.LayoutParams(
-//                TableRow.LayoutParams.MATCH_PARENT,
-//                36);
-       // cellLayout.setMargins(4,0,4,0);
-        //headerRow.setLayoutParams(cellLayout);
 
         TextView index = new TextView(activity);
         index.setText("");
-//        index.setLayoutParams(cellLayout);
         headerRow.addView(index);
 
+
         TextView title = new TextView(activity);
-        title.setText("Fitting");
-//        title.setLayoutParams(cellLayout);
+        title.setText("Fitting Label");
         headerRow.addView(title);
 
         TextView qty = new TextView(activity);
         qty.setText("Qty");
-//        qty.setLayoutParams(cellLayout);
+        qty.setGravity(Gravity.CENTER);
         headerRow.addView(qty);
 
         TextView kVal = new TextView(activity);
         kVal.setText("K");
-//        kVal.setLayoutParams(cellLayout);
+        kVal.setGravity(Gravity.CENTER);
         headerRow.addView(kVal);
 
         TextView pressureDrop = new TextView(activity);
         pressureDrop.setText("P Drop");
-//        pressureDrop.setLayoutParams(cellLayout);
+        pressureDrop.setGravity(Gravity.CENTER);
         headerRow.addView(pressureDrop);
 
         TextView emtpyBtn = new TextView(activity);
         emtpyBtn.setText("");
-//        emtpyBtn.setLayoutParams(cellLayout);
         headerRow.addView(emtpyBtn);
 
         fittingsTable.addView(headerRow);
@@ -170,22 +177,20 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
         FragmentActivity activity = getActivity();
         int rowCount = fittingsTable.getChildCount();
 
-//        TableRow.LayoutParams rowparams = new TableRow.LayoutParams(
-//            TableRow.LayoutParams.WRAP_CONTENT,
-//            TableRow.LayoutParams.WRAP_CONTENT);
-
         TableRow row = new TableRow(activity);
-//        row.setPadding(4,4,4,4);
 
-//        TextView rowNumber = new TextView(activity);
-//        rowNumber.setText(""+rowCount);
-//        row.addView(rowNumber);
+        TextView rowNumber = new TextView(activity);
+        rowNumber.setText(""+rowCount);
+        rowNumber.setGravity(Gravity.CENTER);
+        row.addView(rowNumber);
 
         Spinner fittingSpinner = ((Spinner)getView().findViewById(R.id.fittingsSpinner));
         String fittingName = fittingSpinner.getSelectedItem().toString();
 
 
         EditText fName = new EditText(activity);
+        if(fittingName.equalsIgnoreCase("Fittings"))
+            fittingName = "Custom";
         fName.setText(fittingName);
         fName.setTag("name");
         row.addView(fName);
@@ -194,16 +199,27 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
         EditText fQty = new EditText(activity);
         fQty.setTag("qty");
         fQty.setText("1");
+        fQty.setGravity(Gravity.CENTER);
         row.addView(fQty);
 
+        String fKValNumber = "1";
+        String fPDropNumber = "1";
+        if(fittingsRef.containsKey(fittingName))
+        {
+            fKValNumber = fittingsRef.get(fittingName).get("kval1");
+            fPDropNumber = fittingsRef.get(fittingName).get("kval2");
+        }
+
         EditText fKVal = new EditText(activity);
-        fKVal.setText("1");
+        fKVal.setText(fKValNumber);
         fKVal.setTag("kval");
+        fKVal.setGravity(Gravity.CENTER);
         row.addView(fKVal);
 
         EditText fPDrop = new EditText(activity);
-        fPDrop.setText("1");
+        fPDrop.setText(fPDropNumber);
         fPDrop.setTag("pdrop");
+        fPDrop.setGravity(Gravity.CENTER);
         row.addView(fPDrop);
 
         Button removeBtn = new Button(activity);
@@ -217,7 +233,7 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
         });
         row.addView(removeBtn);
 
-        row.setTag(""+rowCount);
+//        row.setTag(""+rowCount);
         fittingsTable.addView(row);
     }
 
@@ -234,6 +250,16 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
     public void removeFitting(View v)
     {
         TableRow row = (TableRow)v.getParent();
+        int rowIndex = fittingsTable.indexOfChild(row);
+        int rowSize =  fittingsTable.getChildCount();
+
+        for(int i = rowIndex+1; i < rowSize; i++)
+        {
+            TableRow thisRow = (TableRow) fittingsTable.getChildAt(i);
+            TextView rowIndexView = ((TextView)thisRow.getChildAt(0));
+            rowIndexView.setText(""+(i-1));
+        }
+
         fittingsTable.removeView(row);
     }
 

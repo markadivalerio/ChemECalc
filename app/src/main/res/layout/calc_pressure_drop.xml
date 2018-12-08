@@ -148,8 +148,9 @@
             android:id="@+id/fittingsScrollView" app:layout_constraintTop_toBottomOf="@+id/divider3">
         <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:id="@+id/fittingsTableLayout">
-
+                android:layout_height="match_parent"
+                android:id="@+id/fittingsTableLayout"
+                android:stretchColumns="*">
         </TableLayout>
     </ScrollView>
     <View
@@ -167,7 +168,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/addFittingButton"
             app:layout_constraintTop_toTopOf="@+id/addFittingButton"
             app:layout_constraintEnd_toStartOf="@+id/addFittingButton" android:layout_marginEnd="8dp"
-            android:entries="@array/pipe_fittings"/>
+    />
     <Button
             android:text="Add"
             android:layout_width="64dp"
