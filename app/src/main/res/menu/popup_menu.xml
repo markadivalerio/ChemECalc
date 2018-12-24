@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Info"
+          android:id="@+id/popup_info" android:icon="@android:drawable/ic_dialog_info"
+    ></item>
+    <item android:title="Use SI Units" android:id="@+id/popup_use_si" android:checkable="true"/>
+    <item android:title="Help"
+          android:id="@+id/popup_help">
+    </item>
+</menu>

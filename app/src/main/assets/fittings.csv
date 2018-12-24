@@ -1,13 +1,36 @@
-Fittings,kval1,kval2
-Elbow-45,500,0.2
-Elbow-90,800,0.15
-Tees-Through,150,0.5
-Tees-Branch,800,0.8
-Ball Valve,500,0.15
-Butterfly Valve,800,0.25
-Gate Valve,300,0.1
-Globe Valve,1500,4
-Check Valve,1500,1.5
-Plug Valve,1000,0.25
-Pipe Entrance,160,0.5
-Pipe Exit,160,0.5
+Fittings,k_1,k_inf,k_d
+Elbow-45 :  Threaded – Standard Radius (R/D = 1),500,0.071,4.2
+Elbow-45 :  Threaded – Long Radius (R/D = 1.5),500,0.052,4
+Elbow-45 :  Mitered – 1 weld 45 degrees,500,0.086,4
+Elbow-45 :  Mitered – 2 welds 22.5 degrees,500,0.052,4
+Elbow-90 :  Threaded – Standard Radius (R/D = 1),800,0.14,4
+Elbow-90 :  Threaded – Long radius (R/D = 1.5),800,0.071,4.2
+Elbow-90 :  Flanged – Standard Radius (R/D = 1),800,0.091,4
+Elbow-90 :  Flanged – Long Radius (R/D = 2),800,0.056,3.9
+Elbow-90 :  Flanged – Long Radius (R/D = 4),800,0.066,3.9
+Elbow-90 :  Flanged – Long Radius (R/D = 6),800,0.075,4.2
+Elbow-90 :  Mitered – 1 weld 90 degrees,1000,0.27,4
+Elbow-90 :  Mitered – 2 welds 45 degrees,800,0.068,4.1
+Elbow-90 :  Mitered – 3 welds 30 degrees,800,0.035,4.2
+Bend-180 :  Threaded – Close Return (R/D = 1),1000,0.23,4
+Bend-180 :  Flanged – (R/D = 1),1000,0.12,4
+Bend-180 :  All Types – (R/D = 1.5),1000,0.1,4
+Tee Run-Through :  Threaded – (R/D = 1),200,0.091,4
+Tee Run-Through :  Flanged – (R/D = 1),150,0.05,4
+Tee Run-Through :  Stub-in Branch,100,0,0
+Tee Through-Branch :  Threaded – (R/D = 1),800,0.274,4
+Tee Through-Branch :  Flanged – (R/D = 1),800,0.14,4
+Tee Through-Branch :  Stub-in Branch,1000,0.28,4
+Ball Valve :  Standard,300,0.017,3.5
+Gate Valve :  Standard,300,0.037,3.9
+Globe Valve :  Standard,1500,1.7,3.6
+Check Valve :  Swing,1500,0.46,4
+Check Valve :  Lift,2000,2.85,3.8
+Plug Valve :  Branch Flow,500,0.41,4
+Plug Valve :  Straight Through,300,0.084,3.9
+Plug Valve :  Three-way Flow Through,300,0.14,4
+Diaphragm :  Dam type,1000,0.69,4.9
+Angle Valve :  45 degree Full Line Size,950,0.25,4
+Angle Valve :  90 degree Full Line Size,1000,0.69,4
+Pipe Entrance :  Standard,160,0.5,0
+Pipe Exit :  Standard,160,0.5,0

@@ -13,6 +13,7 @@ import android.widget.*;
 import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSelectedListener {
@@ -23,24 +24,16 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
     public HashMap<String, HashMap<String, String>> actualDiamRef = new HashMap<String, HashMap<String, String>>();
     public HashMap<String, HashMap<String, String>> fittingsRef = new HashMap<String, HashMap<String, String>>();
 
-    public Spinner sched;
-    public Spinner nomSize;
-    public EditText actual;
-
     public TableLayout fittingsTable;
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        /*if(initializedAdapter !=parent.getAdapter() ) {
-            initializedAdapter = parent.getAdapter();
-            return;
-        }*/
-        //Spinner sched = (Spinner) getView().findViewById(R.id.schedSpinner);
-        //Spinner nomSize = (Spinner) getView().findViewById(R.id.nomSizeSpinner);
+        EditText actual = (EditText) getView().findViewById(R.id.actualDiamEditText);
+        Spinner sched = (Spinner) getView().findViewById(R.id.schedSpinner);
+        Spinner nomSize = (Spinner) getView().findViewById(R.id.nomSizeSpinner);
         String schedValue = sched.getSelectedItem().toString();
         String nomValue = nomSize.getSelectedItem().toString();
 
-//        EditText actual = (EditText) getView().findViewById(R.id.actualDiamEditText);
         try {
             if (nomValue == null || nomValue == "Nom Sz" || schedValue == null || schedValue == "Sched")
                 return;
@@ -68,6 +61,10 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
          View thisView = getActivity().getCurrentFocus();
          if(thisView == null)
              return;
+
+         Spinner sched = (Spinner) getView().findViewById(R.id.schedSpinner);
+         Spinner nomSize = (Spinner) getView().findViewById(R.id.nomSizeSpinner);
+
          switch(thisView.getId())
          {
              case R.id.actualDiamEditText:
@@ -79,10 +76,181 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
         performCalculation();
     }
 
+    public double getDoubleValue(int rid)
+    {
+        try {
+            TextView view = (TextView) getView().findViewById(rid);
+            String textValue = view.getText().toString();
+            return Double.parseDouble(textValue);
+        }
+        catch(Exception e)
+        {
+            return 0.0;
+        }
+    }
+
+
     public String calculate()
     {
-        return "No Calculation Yet";
+        double flow = getDoubleValue(R.id.flowEditText);
+        double specGrav = getDoubleValue(R.id.specGravEditText);
+        double visc = getDoubleValue(R.id.viscEditText);
+        double diam = getDoubleValue(R.id.actualDiamEditText);
+        double pipeLen = getDoubleValue(R.id.pipeLenEditText);
+        double roughnessF = getDoubleValue(R.id.roughFacEditText);
+
+        TextView calcSummary = (TextView) getView().findViewById(R.id.calcSummaryTextView);
+
+        String inputText = "F: " + flow +
+                " SG: " + specGrav +
+                " u: " + visc +
+                " D: " + diam +
+                " L: " + pipeLen +
+                " RF: " + roughnessF;
+
+        double velocity = calcVelocity(flow, diam);
+        double density = calcDensity(specGrav);
+        double reynolds = calcReynolds(diam, velocity, density, visc);
+        double frictionF = calcFrictionFactor(reynolds, roughnessF, diam);
+        double pipePDrop = calcPipePDrop();
+
+
+        String calcSumText = "" +
+//                " Vel: " + velocity +
+//                " Den: " + density +
+                " Re: " + (new DecimalFormat("##.#####E00").format(reynolds)) +
+                " \nFF: " + (new DecimalFormat("##.#####E00").format(frictionF)) +
+                " \nPPD: " + (new DecimalFormat("##.#####E00").format(pipePDrop));
+
+        String other = " Vel: " + (new DecimalFormat("##.#####E00").format(velocity)) +
+                "\nDen: " + (new DecimalFormat("##.#####E00").format(density)) +
+                "\n FF: " + (new DecimalFormat("##.#####E00").format(frictionF));
+        calcSummary.setText(calcSumText);
+
+        return other;
     }
+
+    public double calcVelocity(double flow, double diam)
+    {
+        try
+        {
+            return (0.408496 * flow) / (Math.pow(diam, 2.0));
+        }
+        catch(Exception e)
+        {
+            return 0.0;
+        }
+    }
+
+
+    public double calcDensity(double specGrav)
+    {
+        return (specGrav * 62.43);
+    }
+
+
+    public double calcReynolds(double diameter, double velocity, double density, double viscocity)
+    {
+        try
+        {
+            return (124 * diameter * velocity * density) / viscocity;
+        }
+        catch(Exception e)
+        {
+            return 0.0;
+        }
+
+    }
+
+
+    public double calcFrictionFactor(double reynolds, double roughnessF, double diam)
+    {
+        double frictionFactor = 0.0;
+        diam = diam / 39.37; // converts inches to meters
+        roughnessF = roughnessF / 1000.0; // mm to m
+        try
+        {
+            double left = Math.pow((7.0 / reynolds), 0.9);
+            double right = (0.27 * roughnessF / diam);
+
+            double a_val = Math.pow(
+                (-2.457 * Math.log(
+                        (left + right)
+                )),
+                16.0);
+            double b_val = Math.pow((37530.0 / reynolds), 16.0);
+
+            double churchillFF = 8.0 * Math.pow(
+                    Math.pow((8.0 / reynolds), 12.0)
+                    + 1 / Math.pow((a_val + b_val), 1.5), (1.0 / 12.0));
+            TextView fitSum = (TextView) getView().findViewById(R.id.fittingSummaryTextView);
+            String sum = "a=" + (new DecimalFormat("##.#####E00").format(a_val))
+                    + "\nb="+(new DecimalFormat("##.#####E00").format(b_val));
+            fitSum.setText(sum);
+            return churchillFF;
+        }
+        catch(Exception e)
+        {
+            return 0.0;
+        }
+    }
+
+
+    public double calcPipePDrop()
+    {
+        double pipePDrop = 0.0;
+
+        return pipePDrop;
+    }
+
+    public double calFittingKValue(double reynolds, double diam,
+            double k_1, double k_inf, double k_d)
+    {
+        double kVal = 1.0;
+
+        return kVal;
+    }
+
+    public double calcFittingPDrop(double reynolds, double diam, double kval)
+    {
+        double kVal = 1.0;
+
+        double grav_accel_const = 32.8;
+
+        return kVal;
+    }
+
+
+    public double sumFittings()
+    {
+        double pDropTotal = 0.0;
+        for(int i = 1; i < fittingsTable.getChildCount(); i++)
+        {
+            TableRow row = (TableRow) fittingsTable.getChildAt(i);
+            EditText pDropEditText = (EditText)row.getChildAt(row.getChildCount() - 2);
+            try {
+                pDropTotal += Double.parseDouble(pDropEditText.getText().toString());
+            }
+            catch(NullPointerException | NumberFormatException e) { /* Do Nothing */
+            }
+        }
+        return pDropTotal;
+    }
+
+//    public double setRowPDrop(TableRow row)
+//    {
+//        return 0.0;
+//    }
+//
+//    public double calcFittingKVal(View row)
+//    {
+//        return 1.0;
+//    }
+//
+//    public double calcFittingPDrop(View row)
+//    {
+//        return 1.0;
+//    }
 
     public void loadAssets() {
         actualDiamRef = loadReferenceCSV("actual_diameter_reference.csv");
@@ -91,13 +259,14 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
 
     public void initFields(View thisView)
     {
-        sched = (Spinner) thisView.findViewById((R.id.schedSpinner));
+
+        Spinner sched = (Spinner) thisView.findViewById((R.id.schedSpinner));
         sched.setOnItemSelectedListener(this);
 
-        nomSize = (Spinner) thisView.findViewById(R.id.nomSizeSpinner);
+        Spinner nomSize = (Spinner) thisView.findViewById(R.id.nomSizeSpinner);
         nomSize.setOnItemSelectedListener(this);
 
-        actual = (EditText) thisView.findViewById(R.id.actualDiamEditText);
+        EditText actual = (EditText) thisView.findViewById(R.id.actualDiamEditText);
         actual.addTextChangedListener(this);
 
 //        Spinner fittingsSpinner = (Spinner) thisView.findViewById(R.id.fittingsSpinner);
@@ -140,6 +309,7 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
 
         TextView title = new TextView(activity);
         title.setText("Fitting Label");
+        title.setMaxWidth(256);
         headerRow.addView(title);
 
         TextView qty = new TextView(activity);
@@ -193,6 +363,7 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
             fittingName = "Custom";
         fName.setText(fittingName);
         fName.setTag("name");
+        fName.setMaxWidth(256);
         row.addView(fName);
 
 
@@ -202,25 +373,42 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
         fQty.setGravity(Gravity.CENTER);
         row.addView(fQty);
 
-        String fKValNumber = "1";
-        String fPDropNumber = "1";
+
         if(fittingsRef.containsKey(fittingName))
         {
-            fKValNumber = fittingsRef.get(fittingName).get("kval1");
-            fPDropNumber = fittingsRef.get(fittingName).get("kval2");
+            String fKValNumber = fittingsRef.get(fittingName).get("k_1");
+            String fPDropNumber = fittingsRef.get(fittingName).get("k_inf");
+
+            TextView fKVal = new TextView(activity);
+            fKVal.setText(fKValNumber);
+            fKVal.setTag("kval");
+            fKVal.setGravity(Gravity.CENTER);
+            row.addView(fKVal);
+
+            TextView fPDrop = new TextView(activity);
+            fPDrop.setText(fPDropNumber);
+            fPDrop.setTag("pdrop");
+            fPDrop.setGravity(Gravity.CENTER);
+            row.addView(fPDrop);
+        }
+        else
+        {
+            String fKValNumber = "1";
+            String fPDropNumber = "1";
+
+            EditText fKVal = new EditText(activity);
+            fKVal.setText(fKValNumber);
+            fKVal.setTag("kval");
+            fKVal.setGravity(Gravity.CENTER);
+            row.addView(fKVal);
+
+            EditText fPDrop = new EditText(activity);
+            fPDrop.setText(fPDropNumber);
+            fPDrop.setTag("pdrop");
+            fPDrop.setGravity(Gravity.CENTER);
+            row.addView(fPDrop);
         }
 
-        EditText fKVal = new EditText(activity);
-        fKVal.setText(fKValNumber);
-        fKVal.setTag("kval");
-        fKVal.setGravity(Gravity.CENTER);
-        row.addView(fKVal);
-
-        EditText fPDrop = new EditText(activity);
-        fPDrop.setText(fPDropNumber);
-        fPDrop.setTag("pdrop");
-        fPDrop.setGravity(Gravity.CENTER);
-        row.addView(fPDrop);
 
         Button removeBtn = new Button(activity);
         removeBtn.setText("Remove");
@@ -237,15 +425,7 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
         fittingsTable.addView(row);
     }
 
-    public double calcFittingKVal(View row)
-    {
-        return new Double(1.0);
-    }
 
-    public double calcFittingPDrop(View row)
-    {
-        return new Double(1.0);
-    }
 
     public void removeFitting(View v)
     {
@@ -268,8 +448,8 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View thisView = createView(inflater, R.layout.calc_pressure_drop, container, savedInstanceState);
-        TextView descriptionView = (TextView) thisView.findViewById(R.id.description);
-        descriptionView.setText(description);
+        // TextView descriptionView = (TextView) thisView.findViewById(R.id.description);
+        // descriptionView.setText(description);
 
 
         loadAssets();

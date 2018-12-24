@@ -36,9 +36,10 @@
             android:ems="10"
             android:inputType="numberDecimal"
             app:layout_constraintStart_toStartOf="parent"
-            android:hint="Gal/min" app:layout_constraintTop_toBottomOf="@+id/divider" android:textSize="12sp"
-            android:layout_marginTop="8dp" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/specGravEditText"/>
+            android:hint="Gal/min" android:textSize="12sp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/specGravEditText" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
             android:id="@+id/specGravEditText"
@@ -58,7 +59,7 @@
             android:layout_height="0dp"
             android:ems="10"
             android:inputType="numberDecimal"
-            android:hint="Viscosity" android:textSize="12sp"
+            android:hint="Dynamic Viscosity" android:textSize="12sp"
             android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/specGravEditText"
             app:layout_constraintTop_toTopOf="@+id/specGravEditText"/>
@@ -74,17 +75,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/nomSizeSpinner"
             app:layout_constraintStart_toEndOf="@+id/nomSizeSpinner" android:layout_marginStart="8dp"/>
 
-    <View
-            android:id="@+id/divider"
-            android:layout_width="368dp"
-            android:layout_height="1dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description"/>
-
     <TextView
             android:id="@+id/resultText"
             android:layout_width="wrap_content"
@@ -96,14 +86,6 @@
             app:layout_constraintTop_toTopOf="@+id/resultLabel"
             app:layout_constraintBottom_toBottomOf="@+id/resultLabel"
             app:layout_constraintHorizontal_bias="0.25"/>
-    <TextView
-            android:text="Description"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:id="@+id/description" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="visible"/>
     <TextView
             android:text="Pressure Drop ="
             android:layout_width="wrap_content"
@@ -128,17 +110,12 @@
             android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/roughFacEditText"
-            android:textSize="12sp" app:layout_constraintEnd_toEndOf="@+id/actualDiamEditText"
-            app:layout_constraintStart_toStartOf="@+id/actualDiamEditText"
-            app:layout_constraintBottom_toBottomOf="@+id/spinner3" app:layout_constraintTop_toTopOf="@+id/spinner3"
-            android:hint="Roughness Factor"/>
-    <Spinner
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:id="@+id/spinner3" app:layout_constraintStart_toStartOf="@+id/nomSizeSpinner"
-            app:layout_constraintEnd_toEndOf="@+id/nomSizeSpinner"
+            android:textSize="12sp"
+            android:hint="Roughness Fctr mm"
+            app:layout_constraintBottom_toBottomOf="@+id/pipeLenEditText"
             app:layout_constraintTop_toTopOf="@+id/pipeLenEditText"
-            app:layout_constraintBottom_toBottomOf="@+id/pipeLenEditText"/>
+            app:layout_constraintStart_toStartOf="@+id/nomSizeSpinner"
+            app:layout_constraintEnd_toEndOf="@+id/nomSizeSpinner"/>
     <ScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -203,4 +180,13 @@
             app:layout_constraintBottom_toBottomOf="@+id/fittingsSpinner"
             app:layout_constraintTop_toTopOf="@+id/fittingsSpinner"
             app:layout_constraintEnd_toStartOf="@+id/fittingsSpinner" android:layout_marginEnd="8dp"/>
+    <TextView
+            android:text="Calculations Summary"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/calcSummaryTextView"
+            app:layout_constraintBottom_toTopOf="@+id/divider2"
+            app:layout_constraintTop_toTopOf="@+id/roughFacEditText"
+            app:layout_constraintStart_toStartOf="@+id/actualDiamEditText"
+            app:layout_constraintEnd_toEndOf="@+id/actualDiamEditText"/>
 </android.support.constraint.ConstraintLayout>

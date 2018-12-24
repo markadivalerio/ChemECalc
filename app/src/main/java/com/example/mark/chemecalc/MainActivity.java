@@ -8,10 +8,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener/*,OnMenuItemClickListener */{
+//    protected Button popupMenuButton;
+//    protected PopupMenu popupMenuTest;
+    protected Menu popupMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +36,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+//        popupMenuButton = (Button) findViewById(R.id.popupMenuButton);
+//        popupMenuButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                popupMenuTest = new PopupMenu(MainActivity.this, popupMenuButton);
+//
+//                popupMenuTest.getMenuInflater().inflate(R.menu.popup_menu, popupMenuTest.getMenu());
+//
+//                popupMenuTest.setOnMenuItemClickListener(MainActivity.this);
+//            }
+//        });
     }
 
     @Override
@@ -87,4 +107,51 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer_layout.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        popupMenu = menu;
+//        popupMenu = (PopupMenu) menu;
+//        popupMenu.setOnMenuItemClickListener(this);
+        getMenuInflater().inflate(R.menu.popup_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+int id = item.getItemId();
+        switch(id)
+        {
+            case R.id.popup_info:
+                Toast.makeText(this, "Info", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.popup_use_si:
+                item.setChecked(!item.isChecked());
+                break;
+        }
+//        popupMenu.show();
+        return true;
+
+    }
+
+//    @Override
+//    public boolean onMenuItemClick(MenuItem item) {
+//        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+//        item.setActionView(new View(this));
+//        int id = item.getItemId();
+//        switch(id)
+//        {
+//            case R.id.popup_info:
+//                Toast.makeText(this, "Info", Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.popup_use_si:
+//                item.setChecked(!item.isChecked());
+//                break;
+//        }
+////        popupMenu.show()
+//        return true;
+////        return false;
+//    }
 }
