@@ -129,8 +129,13 @@ public class InputView extends ConstraintLayout{
         {
             unitsDictionary = new Dictionary(((Activity)context), "units_reference.csv");
         }
-        String unitStr = unitsDictionary.get(unitReference, "DEFAULT");
-        ArrayList<String> units = new ArrayList<String>(Arrays.asList(unitStr.split(",")));
+
+        ArrayList<String> units = new ArrayList<String>();
+        if(unitReference != null && !unitReference.trim().isEmpty())
+        {
+            String unitStr = unitsDictionary.get(unitReference, "DEFAULT");
+            units.addAll(Arrays.asList(unitStr.split(",")));
+        }
 
         return units;
     }

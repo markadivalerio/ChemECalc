@@ -17,8 +17,8 @@ public class CalcReynolds extends CalcPage {
     {
         try
         {
-            EditText input1 = (EditText)getView().findViewById(R.id.flowEditText); // density
-            EditText input2 = (EditText)getView().findViewById(R.id.specGravEditText); // diameter
+            EditText input1 = (EditText)getView().findViewById(R.id.densEditText); // density
+            EditText input2 = (EditText)getView().findViewById(R.id.diamEditText); // diameter
             EditText input3 = (EditText)getView().findViewById(R.id.viscEditText); // velocity
             EditText input4 = (EditText)getView().findViewById(R.id.actualDiamEditText); // viscosity
             double density = Double.parseDouble(input1.getText().toString());

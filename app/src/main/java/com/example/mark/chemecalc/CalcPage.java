@@ -219,17 +219,11 @@ public class CalcPage extends Fragment implements TextWatcher {
                                 case R.id.units_diam:
                                     textId = R.id.actualDiamEditText;
                                     break;
-                                case R.id.units_flow:
-                                    textId = R.id.flowEditText;
-                                    break;
                                 case R.id.units_pipe_length:
                                     textId = R.id.pipeLenEditText;
                                     break;
                                 case R.id.units_roughness_factor:
                                     textId = R.id.roughFacEditText;
-                                    break;
-                                case R.id.units_viscosity:
-                                    textId = R.id.viscEditText;
                                     break;
                                 default:
                                     textId = -1;
