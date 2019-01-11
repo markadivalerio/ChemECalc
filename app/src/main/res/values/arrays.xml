@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--calc_pressure_drop-->
+    <string-array name="units_flow">
+        <item>Gpm</item>
+        <item>Lpm</item>
+    </string-array>
+
+    <string-array name="units_viscosity">
+        <item>cP</item>
+        <item>Pas</item>
+    </string-array>
+
+    <string-array name="units_diam">
+        <item>in</item>
+        <item>mm</item>
+    </string-array>
+
+    <string-array name="units_pipe_length">
+        <item>ft</item>
+        <item>m</item>
+    </string-array>
+
+    <string-array name="units_roughness_factor">
+        <item>mm</item>
+        <item>in</item>
+    </string-array>
+</resources>

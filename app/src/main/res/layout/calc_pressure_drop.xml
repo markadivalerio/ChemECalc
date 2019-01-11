@@ -8,71 +8,79 @@
                                              android:visibility="visible" android:minHeight="1dp"
                                              tools:layout_editor_absoluteY="81dp">
 
+    <com.example.mark.chemecalc.InputView
+            layout="@layout/input_view"
+            android:id="@+id/viscosity"
+            android:layout_height="@dimen/input_height"
+            app:iv_label="Viscosity"
+            app:iv_value=""
+            app:iv_units_reference="viscosity"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="114dp"
+            app:layout_constraintStart_toStartOf="@+id/actualDiamEditText"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    <com.example.mark.chemecalc.InputView
+            layout="@layout/input_view"
+            android:id="@+id/specific_gravity"
+            android:layout_width="114dp"
+            app:iv_label="Specific Gravity"
+            app:iv_value=""
+            app:iv_units_reference="flow"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp" android:layout_height="@dimen/input_height"
+            android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"/>
     <Spinner
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/input_height"
             android:id="@+id/nomSizeSpinner"
             android:textSize="8pt"
             android:ellipsize="none"
-            app:layout_constraintTop_toTopOf="@+id/schedSpinner"
+            android:entries="@array/nominal_size"
+            android:spinnerMode="dialog"
+            app:layout_constraintEnd_toEndOf="@+id/flow"
+            android:layout_marginEnd="-1dp"
             app:layout_constraintBottom_toBottomOf="@+id/schedSpinner"
-            app:layout_constraintVertical_bias="0.0" app:layout_constraintEnd_toEndOf="@+id/specGravEditText"
-            app:layout_constraintStart_toStartOf="@+id/specGravEditText" android:entries="@array/nominal_size"/>
+            app:layout_constraintStart_toEndOf="@+id/schedSpinner" android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@+id/schedSpinner"/>
     <Spinner
-            android:layout_width="0dp"
+            android:layout_width="114dp"
             android:layout_height="36dp"
             android:id="@+id/schedSpinner"
             android:textSize="8pt"
-            android:layout_marginTop="8dp"
             android:ellipsize="none"
-            app:layout_constraintTop_toBottomOf="@+id/flowEditText" app:layout_constraintEnd_toEndOf="@+id/flowEditText"
-            app:layout_constraintStart_toStartOf="@+id/flowEditText" android:entries="@array/sched"
-            app:layout_constraintHorizontal_bias="0.0"/>
-    <EditText
-            android:id="@+id/flowEditText"
-            android:layout_width="0dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="8dp"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            app:layout_constraintStart_toStartOf="parent"
-            android:hint="Gal/min" android:textSize="12sp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/specGravEditText" android:layout_marginTop="8dp"
+            android:entries="@array/sched"
+            android:spinnerMode="dialog"
+            android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="@+id/flow"
+            app:layout_constraintHorizontal_bias="0.937" android:layout_marginTop="45dp"
             app:layout_constraintTop_toTopOf="parent"/>
 
-    <EditText
-            android:id="@+id/specGravEditText"
-            android:layout_width="130dp"
-            android:layout_height="36dp"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:hint="Specific Gravity"
-            android:textSize="12sp"
-            app:layout_constraintTop_toTopOf="@+id/flowEditText"
-            app:layout_constraintBottom_toBottomOf="@+id/flowEditText" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/viscEditText"/>
-
-    <EditText
-            android:id="@+id/viscEditText"
+    <com.example.mark.chemecalc.InputView
+            layout="@layout/input_view"
+            android:id="@+id/flow"
             android:layout_width="114dp"
-            android:layout_height="0dp"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:hint="Dynamic Viscosity" android:textSize="12sp"
-            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/specGravEditText"
-            app:layout_constraintTop_toTopOf="@+id/specGravEditText"/>
+            android:layout_height="@dimen/input_height"
+            app:iv_label="Flow Rate"
+            app:iv_value=""
+            app:iv_units_reference="flow"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+    />
+
 
     <EditText
             android:id="@+id/actualDiamEditText"
-            android:layout_width="114dp"
+            android:layout_width="64dp"
             android:layout_height="0dp"
             android:ems="10"
             android:inputType="numberDecimal"
-            android:hint="Actual Diam" android:textSize="12sp"
+            android:hint="Diameter" android:textSize="12sp"
             app:layout_constraintTop_toTopOf="@+id/nomSizeSpinner"
             app:layout_constraintBottom_toBottomOf="@+id/nomSizeSpinner"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintEnd_toStartOf="@+id/units_diam"
             app:layout_constraintStart_toEndOf="@+id/nomSizeSpinner" android:layout_marginStart="8dp"/>
 
     <TextView
@@ -93,36 +101,38 @@
             android:id="@+id/resultLabel"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="88dp" android:textStyle="bold"
-            android:layout_marginBottom="24dp" app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_marginBottom="32dp" app:layout_constraintBottom_toBottomOf="parent"
+    />
     <EditText
-            android:layout_width="0dp"
+            android:layout_width="64dp"
             android:layout_height="36dp"
             android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/pipeLenEditText"
-            app:layout_constraintStart_toStartOf="@+id/schedSpinner"
-            app:layout_constraintEnd_toEndOf="@+id/schedSpinner"
             android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/schedSpinner"
-            android:hint="Pipe Length" android:textSize="12sp"/>
+            android:hint="Pipe Length" android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/schedSpinner"
+    />
     <EditText
-            android:layout_width="0dp"
+            android:layout_width="64dp"
             android:layout_height="0dp"
             android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/roughFacEditText"
             android:textSize="12sp"
-            android:hint="Roughness Fctr mm"
+            android:hint="Roughness F. (m)"
             app:layout_constraintBottom_toBottomOf="@+id/pipeLenEditText"
             app:layout_constraintTop_toTopOf="@+id/pipeLenEditText"
             app:layout_constraintStart_toStartOf="@+id/nomSizeSpinner"
-            app:layout_constraintEnd_toEndOf="@+id/nomSizeSpinner"/>
+    />
     <ScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/divider4"
-            android:id="@+id/fittingsScrollView" app:layout_constraintTop_toBottomOf="@+id/divider3">
+            android:id="@+id/fittingsScrollView" app:layout_constraintTop_toBottomOf="@+id/divider3"
+            app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="1.0">
         <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -145,7 +155,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/addFittingButton"
             app:layout_constraintTop_toTopOf="@+id/addFittingButton"
             app:layout_constraintEnd_toStartOf="@+id/addFittingButton" android:layout_marginEnd="8dp"
-    />
+            android:spinnerMode="dialog"/>
     <Button
             android:text="Add"
             android:layout_width="64dp"
@@ -170,23 +180,48 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toTopOf="@+id/resultLabel" android:layout_marginBottom="8dp"/>
+
     <TextView
-            android:text="Fittings Summary"
             android:layout_width="137dp"
             android:layout_height="0dp"
             android:id="@+id/fittingSummaryTextView"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/fittingsSpinner"
             app:layout_constraintTop_toTopOf="@+id/fittingsSpinner"
             app:layout_constraintEnd_toStartOf="@+id/fittingsSpinner" android:layout_marginEnd="8dp"/>
     <TextView
-            android:text="Calculations Summary"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:id="@+id/calcSummaryTextView"
             app:layout_constraintBottom_toTopOf="@+id/divider2"
             app:layout_constraintTop_toTopOf="@+id/roughFacEditText"
-            app:layout_constraintStart_toStartOf="@+id/actualDiamEditText"
-            app:layout_constraintEnd_toEndOf="@+id/actualDiamEditText"/>
+            app:layout_constraintStart_toStartOf="@+id/actualDiamEditText" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"/>
+
+    <Spinner
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:id="@+id/units_diam"
+            app:layout_constraintTop_toTopOf="@+id/actualDiamEditText"
+            app:layout_constraintBottom_toBottomOf="@+id/actualDiamEditText" app:layout_constraintEnd_toEndOf="parent"
+            android:entries="@array/units_diam" android:spinnerMode="dialog" android:tag="unit_selector"
+            android:layout_marginEnd="8dp"/>
+    <Spinner
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/units_pipe_length" app:layout_constraintStart_toEndOf="@+id/pipeLenEditText"
+            app:layout_constraintEnd_toEndOf="@+id/schedSpinner"
+            app:layout_constraintTop_toTopOf="@+id/pipeLenEditText"
+            app:layout_constraintBottom_toBottomOf="@+id/pipeLenEditText" android:entries="@array/units_pipe_length"
+            android:spinnerMode="dialog" android:tag="unit_selector"/>
+    <Spinner
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/units_roughness_factor" app:layout_constraintStart_toEndOf="@+id/roughFacEditText"
+            app:layout_constraintTop_toTopOf="@+id/roughFacEditText"
+            app:layout_constraintBottom_toBottomOf="@+id/roughFacEditText" android:spinnerMode="dialog"
+            android:entries="@array/units_roughness_factor"
+            android:tag="unit_selector" app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintEnd_toEndOf="@+id/nomSizeSpinner"/>
 </android.support.constraint.ConstraintLayout>

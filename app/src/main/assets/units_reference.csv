@@ -1,0 +1,6 @@
+pagename,DEFAULT,calc_pressure_drop
+flow,"Gpm,Lpm",
+viscosity,"cP,Pas",
+diameter,"in,mm",
+pipe_length,"ft,mm",
+roughness_factor,"mm,in",

@@ -12,14 +12,21 @@ public class Dictionary {
 
     protected HashMap<String, HashMap<String, String>> dict;
 
-    public Dictionary()
+    public Dictionary(Activity act, String csvFilename)
     {
         dict = new HashMap<String, HashMap<String, String>>();
+        dict = loadCsv(act, csvFilename, true, true);
     }
 
-    public void loadFromCSV(Activity act, String csvFilename, boolean columnHeader, boolean rowHeader)
+    public Dictionary(Activity act, String csvFilename, boolean hasColumnHeader, boolean hasRowHeader)
     {
         dict = new HashMap<String, HashMap<String, String>>();
+        dict = loadCsv(act, csvFilename, hasColumnHeader, hasRowHeader);
+    }
+
+    public HashMap<String, HashMap<String, String>> loadCsv(Activity act, String csvFilename, boolean hasColumnHeader, boolean hasRowHeader)
+    {
+        HashMap<String, HashMap<String, String>> dictionaryMap = new HashMap<String, HashMap<String, String>>();
         try {
             CSVReader csvReader = new CSVReader(new InputStreamReader(act.getAssets().open(csvFilename)));
             String[] header = csvReader.readNext();
@@ -32,19 +39,29 @@ public class Dictionary {
                     String val = (c < row.length) ? row[c] : null;
                     indexedRow.put(header[c], val);
                 }
-                dict.put(row[0], indexedRow);
+                dictionaryMap.put(row[0], indexedRow);
             }
         }
         catch(IOException e) {
             //woopsy
             e.printStackTrace();
         }
+        return dictionaryMap;
     }
 
     public ArrayList<String> getRowHeaders()
     {
         ArrayList<String> rowHeaders = new ArrayList<String>(dict.keySet());
         return rowHeaders;
+    }
+
+    public HashMap<String, String> getRow(String rowHeader)
+    {
+        if(dict.containsKey(rowHeader))
+        {
+            return dict.get(rowHeader);
+        }
+        return new HashMap<String, String>();
     }
 
     public ArrayList<String> getColumnHeaders()
@@ -58,13 +75,15 @@ public class Dictionary {
         return colHeaders;
     }
 
-    public String get(Object row, Object col)
+    public HashMap<String, String> getColumn(String columnHeader)
     {
-        return getValue(String.valueOf(row), String.valueOf(col));
+        return new HashMap<String, String>();
     }
 
-    public String getValue(String row, String col)
+    public String get(Object rowId, Object colId)
     {
+        String row = String.valueOf(rowId);
+        String col = String.valueOf(colId);
         if(!dict.containsKey(row) || dict.get(row) == null || !dict.get(row).containsKey(col))
         {
             String message = "[" + row + "," + col + "] not within bounds of dictionary";

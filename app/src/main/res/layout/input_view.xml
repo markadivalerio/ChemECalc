@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+        xmlns:android="http://schemas.android.com/apk/res/android"
+         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+         xmlns:tools="http://schemas.android.com/tools"
+         tools:parentTag="android.support.constraint.ConstraintLayout"
+         android:orientation="horizontal"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent" android:paddingTop="10dp">
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/input_label" android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_height="12dp"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@+id/input_value"
+            app:layout_constraintTop_toTopOf="@+id/input_units" android:textStyle="bold"
+            android:layout_marginTop="2dp"/>
+    <EditText
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:inputType="numberSigned|numberDecimal"
+            android:ems="10"
+            android:id="@+id/input_value" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true"
+            android:text="0.0"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@null"
+            android:paddingTop="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/input_units"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:id="@+id/input_units"
+            android:textAlignment="center"
+            android:textSize="10sp"
+            app:layout_constraintTop_toTopOf="@+id/input_value"
+            app:layout_constraintBottom_toBottomOf="@+id/input_value"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:minWidth="32dp"
+            android:width="32dp" android:maxWidth="64dp"/>
+</merge>

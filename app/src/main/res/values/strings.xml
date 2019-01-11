@@ -26,11 +26,6 @@
         <item>lb/ft^3</item>
     </string-array>
 
-    <string-array name="units_viscosity">
-        <item>Ns/m^2</item>
-        <item>cP</item>
-    </string-array>
-
     <string-array name="sched">
         <item>Sched</item>
         <item>5</item>
