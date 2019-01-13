@@ -526,8 +526,6 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
         fittingsTable.addView(row);
     }
 
-
-
     public void removeFitting(View v)
     {
         TableRow row = (TableRow)v.getParent();

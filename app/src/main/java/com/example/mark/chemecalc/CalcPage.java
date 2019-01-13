@@ -32,7 +32,7 @@ import static javax.measure.unit.NonSI.*;
 import static javax.measure.unit.SI.*;
 
 
-public class CalcPage extends Fragment implements TextWatcher {
+public class CalcPage extends Fragment implements TextWatcher, OnCustomEventListener {
 
     public static final String title = "Calculations";
     public String description = "";
@@ -183,12 +183,8 @@ public class CalcPage extends Fragment implements TextWatcher {
             View thisView = layout.getChildAt(i);
             if(thisView instanceof InputView) {
                 InputView iView = (InputView) thisView;
-                iView.setCustomEventListener(new OnCustomEventListener() {
-                    @Override
-                    public void onChangeEvent() {
-                        performCalculation();
-                    }
-                });
+                iView.setCustomEventListener(this);
+                iView.resetListeners();
             }
             if(thisView instanceof EditText) {
                 EditText editTextField = (EditText) thisView;
@@ -253,5 +249,11 @@ public class CalcPage extends Fragment implements TextWatcher {
         }
 
         return this_view;
+    }
+
+    @Override
+    public void onChangeEvent() {
+        Log.w("test", "here100");
+        performCalculation();
     }
 }

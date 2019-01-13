@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="InputView">
-        <attr name="iv_label" format="string" localization="suggested"/>
-        <attr name="iv_value" format="string" localization="suggested"/>
-        <attr name="iv_units_reference" format="string" localization="suggested"/>
+        <attr name="layout_iv_label" format="string" localization="suggested"/>
+        <attr name="layout_iv_value" format="string" localization="suggested"/>
+        <attr name="layout_iv_units_reference" format="string" localization="suggested"/>
     </declare-styleable>
 </resources>

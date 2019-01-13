@@ -7,30 +7,48 @@
                                              android:id="@+id/calcConstraintLayoutWrapper"
                                              android:visibility="visible" android:minHeight="1dp"
                                              tools:layout_editor_absoluteY="81dp">
-
-    <com.example.mark.chemecalc.InputView
-            layout="@layout/input_view"
-            android:id="@+id/viscosity"
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="0dp"
             android:layout_height="@dimen/input_height"
-            app:iv_label="Viscosity"
-            app:iv_value=""
-            app:iv_units_reference="viscosity"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/viscosity_wrapper"
+            app:layout_constraintTop_toTopOf="@+id/specific_gravity_wrapper"
+            app:layout_constraintBottom_toBottomOf="@+id/specific_gravity_wrapper"
+            app:layout_constraintVertical_bias="1.0" app:layout_constraintStart_toEndOf="@+id/specific_gravity_wrapper"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp">
+        <com.example.mark.chemecalc.InputView
+                android:id="@+id/viscosity"
+                android:layout_height="@dimen/input_height"
+                app:layout_iv_label="Viscosity"
+                app:layout_iv_value=""
+                app:layout_iv_units_reference="viscosity"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="114dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        <!--<include layout="@layout/input_view"/>-->
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
             android:layout_width="114dp"
-            app:layout_constraintStart_toStartOf="@+id/actualDiamEditText"
-            app:layout_constraintEnd_toEndOf="parent"/>
-    <com.example.mark.chemecalc.InputView
-            layout="@layout/input_view"
-            android:id="@+id/specific_gravity"
-            android:layout_width="114dp"
-            app:iv_label="Specific Gravity"
-            app:iv_value=""
-            app:iv_units_reference="flow"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp" android:layout_height="@dimen/input_height"
-            android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_height="36dp"
+            android:id="@+id/specific_gravity_wrapper"
+            app:layout_constraintTop_toTopOf="@+id/flow_wrapper"
+            app:layout_constraintBottom_toBottomOf="@+id/flow_wrapper" app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/flow_wrapper" android:layout_marginStart="8dp">
+        <com.example.mark.chemecalc.InputView
+                android:id="@+id/specific_gravity"
+                android:layout_width="114dp"
+                android:layout_height="@dimen/input_height"
+                android:orientation="horizontal"
+                app:layout_iv_label="Specific Gravity"
+                app:layout_iv_value=""
+                app:layout_iv_units_reference="flow"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="8dp" android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"/>
+    </android.support.constraint.ConstraintLayout>
+
     <Spinner
             android:layout_width="0dp"
             android:layout_height="@dimen/input_height"
@@ -39,11 +57,11 @@
             android:ellipsize="none"
             android:entries="@array/nominal_size"
             android:spinnerMode="dialog"
-            app:layout_constraintEnd_toEndOf="@+id/flow"
-            android:layout_marginEnd="-1dp"
             app:layout_constraintBottom_toBottomOf="@+id/schedSpinner"
-            app:layout_constraintStart_toEndOf="@+id/schedSpinner" android:layout_marginStart="8dp"
-            app:layout_constraintTop_toTopOf="@+id/schedSpinner"/>
+            app:layout_constraintTop_toTopOf="@+id/schedSpinner"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/specific_gravity_wrapper"
+            app:layout_constraintEnd_toEndOf="@+id/specific_gravity_wrapper"/>
     <Spinner
             android:layout_width="114dp"
             android:layout_height="36dp"
@@ -52,22 +70,26 @@
             android:ellipsize="none"
             android:entries="@array/sched"
             android:spinnerMode="dialog"
-            android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="@+id/flow"
-            app:layout_constraintHorizontal_bias="0.937" android:layout_marginTop="45dp"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-    <com.example.mark.chemecalc.InputView
-            layout="@layout/input_view"
-            android:id="@+id/flow"
+            app:layout_constraintEnd_toEndOf="@+id/flow_wrapper"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/flow_wrapper"
+            app:layout_constraintStart_toStartOf="@+id/flow_wrapper"/>
+    <android.support.constraint.ConstraintLayout
             android:layout_width="114dp"
             android:layout_height="@dimen/input_height"
-            app:iv_label="Flow Rate"
-            app:iv_value=""
-            app:iv_units_reference="flow"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-    />
+            android:id="@+id/flow_wrapper"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent">
+        <com.example.mark.chemecalc.InputView
+                android:id="@+id/flow"
+                android:layout_width="114dp"
+                android:layout_height="@dimen/input_height"
+                app:layout_iv_label="Flow Rate"
+                app:layout_iv_value=""
+                app:layout_iv_units_reference="flow"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
 
 
     <EditText
@@ -132,7 +154,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/divider4"
             android:id="@+id/fittingsScrollView" app:layout_constraintTop_toBottomOf="@+id/divider3"
-            app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="0.0">
         <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

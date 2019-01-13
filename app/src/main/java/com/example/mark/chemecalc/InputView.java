@@ -21,9 +21,9 @@ import javax.measure.unit.Unit;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class InputView extends ConstraintLayout{
+public class InputView extends ConstraintLayout implements TextWatcher, OnClickListener{
 
-    public OnCustomEventListener customEventListener = null;
+    private OnCustomEventListener customEventListener = null;
     public static Dictionary unitsDictionary = null;
     public TextView labelView;
     public EditText valueView;
@@ -52,7 +52,6 @@ public class InputView extends ConstraintLayout{
     {
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.input_view, this);
-        customEventListener = null;
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.InputView);
 
@@ -63,7 +62,7 @@ public class InputView extends ConstraintLayout{
 
         try
         {
-            String unitReference = ta.getString(R.styleable.InputView_iv_units_reference);;
+            String unitReference = ta.getString(R.styleable.InputView_layout_iv_units_reference);;
             unitsList = loadUnits(context, unitReference);
             ta.recycle();
 
@@ -79,48 +78,59 @@ public class InputView extends ConstraintLayout{
         }
 
         ta = context.obtainStyledAttributes(attrs, R.styleable.InputView);
-        String initLabel = ta.getString(R.styleable.InputView_iv_label);
+        String initLabel = ta.getString(R.styleable.InputView_layout_iv_label);
         setLabel(initLabel);
         ta.recycle();
 
         ta = context.obtainStyledAttributes(attrs, R.styleable.InputView);
-        String initValue = ta.getString(R.styleable.InputView_iv_value);
+        String initValue = ta.getString(R.styleable.InputView_layout_iv_value);
         setValue(initValue);
         ta.recycle();
 
-        valueView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        resetListeners();
+    }
 
-            }
+    public void resetListeners() {
+        valueView.addTextChangedListener(this);
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+        unitView.setOnClickListener(this);
+    }
 
-            }
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                customEventListener.onChangeEvent();
-            }
-        });
+    }
 
-        unitView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.w("test","Clicked");
-                int currentIx = unitsList.indexOf(getUnit()) + 1;
-                if(currentIx >= unitsList.size())
-                {
-                    currentIx = 0;
-                }
-                Log.w("test", unitsList.get(currentIx));
-                setUnit(unitsList.get(currentIx));
-                customEventListener.onChangeEvent();
-            }
-        });
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+    }
 
+    @Override
+    public void afterTextChanged(Editable s) {
+        Log.w("test", "here60");
+        if (customEventListener != null) {
+            Log.w("test", "here61");
+            customEventListener.onChangeEvent();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.w("test", "Clicked");
+        int currentIx = unitsList.indexOf(getUnit()) + 1;
+        if (currentIx >= unitsList.size()) {
+            currentIx = 0;
+        }
+        Log.w("test", unitsList.get(currentIx));
+        setUnit(unitsList.get(currentIx));
+        Log.w("test", String.valueOf(customEventListener));
+        Log.w("test", "here50");
+        if (customEventListener != null) {
+            Log.w("test", "here51");
+
+            customEventListener.onChangeEvent();
+        }
     }
 
     public ArrayList<String> loadUnits(Context context, String unitReference)
@@ -213,6 +223,10 @@ public class InputView extends ConstraintLayout{
     }
 
     public void setCustomEventListener(OnCustomEventListener eventListener) {
+        Log.w("test","wazzzupp");
         customEventListener = eventListener;
+        resetListeners();
     }
+
+
 }
