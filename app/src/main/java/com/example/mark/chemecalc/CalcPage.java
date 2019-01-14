@@ -181,10 +181,12 @@ public class CalcPage extends Fragment implements TextWatcher, OnCustomEventList
         for(int i=0; i < layout.getChildCount(); i++)
         {
             View thisView = layout.getChildAt(i);
-            if(thisView instanceof InputView) {
-                InputView iView = (InputView) thisView;
+            if(thisView instanceof ConstraintLayout) {
+                InputView iView = (InputView) ((ConstraintLayout)thisView).getChildAt(0);
+                Log.w("test","inputview");
+                InputView.calcPage = this;
                 iView.setCustomEventListener(this);
-                iView.resetListeners();
+                iView.resetListeners(this);
             }
             if(thisView instanceof EditText) {
                 EditText editTextField = (EditText) thisView;

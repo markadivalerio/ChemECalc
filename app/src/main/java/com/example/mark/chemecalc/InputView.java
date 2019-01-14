@@ -24,6 +24,7 @@ import java.util.Arrays;
 public class InputView extends ConstraintLayout implements TextWatcher, OnClickListener{
 
     private OnCustomEventListener customEventListener = null;
+    public static CalcPage calcPage = null;
     public static Dictionary unitsDictionary = null;
     public TextView labelView;
     public EditText valueView;
@@ -87,10 +88,15 @@ public class InputView extends ConstraintLayout implements TextWatcher, OnClickL
         setValue(initValue);
         ta.recycle();
 
-        resetListeners();
+        //resetListeners(null);
     }
 
-    public void resetListeners() {
+    public void resetListeners(CalcPage cPage) {
+
+        if(cPage != null) {
+            InputView.calcPage = cPage;
+        }
+
         valueView.addTextChangedListener(this);
 
         unitView.setOnClickListener(this);
@@ -109,9 +115,14 @@ public class InputView extends ConstraintLayout implements TextWatcher, OnClickL
     @Override
     public void afterTextChanged(Editable s) {
         Log.w("test", "here60");
-        if (customEventListener != null) {
-            Log.w("test", "here61");
-            customEventListener.onChangeEvent();
+//        if (customEventListener != null) {
+//            Log.w("test", "here61");
+//            customEventListener.onChangeEvent();
+//        }
+        if (InputView.calcPage != null) {
+            Log.w("test", "here51");
+
+            InputView.calcPage.performCalculation();
         }
     }
 
@@ -126,10 +137,15 @@ public class InputView extends ConstraintLayout implements TextWatcher, OnClickL
         setUnit(unitsList.get(currentIx));
         Log.w("test", String.valueOf(customEventListener));
         Log.w("test", "here50");
-        if (customEventListener != null) {
+//        if (customEventListener != null) {
+//            Log.w("test", "here51");
+//
+//            customEventListener.onChangeEvent();
+//        }
+        if (InputView.calcPage != null) {
             Log.w("test", "here51");
 
-            customEventListener.onChangeEvent();
+            InputView.calcPage.performCalculation();
         }
     }
 
@@ -225,7 +241,7 @@ public class InputView extends ConstraintLayout implements TextWatcher, OnClickL
     public void setCustomEventListener(OnCustomEventListener eventListener) {
         Log.w("test","wazzzupp");
         customEventListener = eventListener;
-        resetListeners();
+        //resetListeners(null);
     }
 
 
