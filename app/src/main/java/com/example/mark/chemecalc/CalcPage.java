@@ -217,12 +217,6 @@ public class CalcPage extends Fragment implements TextWatcher, OnCustomEventList
                                 case R.id.units_diam:
                                     textId = R.id.actualDiamEditText;
                                     break;
-                                case R.id.units_pipe_length:
-                                    textId = R.id.pipeLenEditText;
-                                    break;
-                                case R.id.units_roughness_factor:
-                                    textId = R.id.roughFacEditText;
-                                    break;
                                 default:
                                     textId = -1;
                                     break;

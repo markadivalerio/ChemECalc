@@ -93,7 +93,8 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
         double specGrav = ((InputView) getView().findViewById(R.id.specific_gravity)).getValue();
         double visc = ((InputView) getView().findViewById(R.id.viscosity)).getValueIn("cP");
         double diam = getInputValue(R.id.actualDiamEditText, R.id.units_diam, "in");
-        double roughnessF = getInputValue(R.id.roughFacEditText, R.id.units_roughness_factor, "m");
+        double pipeLen = ((InputView) getView().findViewById(R.id.pipe_length)).getValueIn("ft");
+        double roughnessF = ((InputView) getView().findViewById(R.id.roughness_factor)).getValueIn("mm");
 
 //        double pipeLenKM = getInputValue(R.id.pipeLenEditText, R.id.units_pipe_length, "km");
 //        String whatevah = "km = " + pipeLenKM;
@@ -224,7 +225,7 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
 
     public double calcPipePDrop(double pipePDropPer100)
     {
-        double pipeLen = getDoubleValue(R.id.pipeLenEditText);
+        double pipeLen = ((InputView) getView().findViewById(R.id.pipe_length)).getValueIn("ft");
         return (pipeLen * pipePDropPer100 / 100.0);
     }
 

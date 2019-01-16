@@ -68,7 +68,7 @@ public class InputView extends ConstraintLayout implements TextWatcher, OnClickL
             ta.recycle();
 
             Log.w("test", String.valueOf(unitsList));
-            if(unitsList != null)
+            if(unitsList != null && !unitsList.isEmpty())
             {
                 previousUnit = unitsList.get(0);
                 setUnit(previousUnit, false);
@@ -129,6 +129,10 @@ public class InputView extends ConstraintLayout implements TextWatcher, OnClickL
     @Override
     public void onClick(View v) {
         Log.w("test", "Clicked");
+        if(unitsList == null || unitsList.isEmpty())
+        {
+            return;
+        }
         int currentIx = unitsList.indexOf(getUnit()) + 1;
         if (currentIx >= unitsList.size()) {
             currentIx = 0;
