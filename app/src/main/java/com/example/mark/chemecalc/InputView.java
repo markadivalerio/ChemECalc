@@ -1,6 +1,8 @@
 package com.example.mark.chemecalc;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.constraint.ConstraintLayout;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import javax.measure.Measure;
@@ -22,15 +25,15 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class InputView extends ConstraintLayout implements TextWatcher, OnClickListener{
+public class InputView extends ConstraintLayout implements TextWatcher, OnClickListener, View.OnLongClickListener {
 
-    private OnCustomEventListener customEventListener = null;
+    public OnCustomEventListener customEventListener = null;
     public static Dictionary unitsDictionary = null;
     public TextView labelView;
     public EditText valueView;
     public TextView unitView;
-    private ArrayList<String> unitsList = null;
-    private String previousUnit = "";
+    public ArrayList<String> unitsList = null;
+    public String previousUnit = "";
     public DecimalFormat decimalFormat;
 
     public InputView(Context context) {
@@ -92,7 +95,7 @@ public class InputView extends ConstraintLayout implements TextWatcher, OnClickL
         if(valueListener) {
             valueView.addTextChangedListener(this);
         }
-        else
+        else //turn off listener (aka set to nothing)
         {
             valueView.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -115,7 +118,7 @@ public class InputView extends ConstraintLayout implements TextWatcher, OnClickL
         {
             unitView.setOnClickListener(this);
         }
-        else
+        else//turn off listener (aka set to nothing)
         {
             unitView.setOnClickListener(new OnClickListener() {
                 @Override
@@ -124,6 +127,7 @@ public class InputView extends ConstraintLayout implements TextWatcher, OnClickL
                 }
             });
         }
+        unitView.setOnLongClickListener(this);
     }
 
     @Override
@@ -157,6 +161,12 @@ public class InputView extends ConstraintLayout implements TextWatcher, OnClickL
         if (customEventListener != null) {
             customEventListener.onChangeEvent();
         }
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        setClipboard();
+        return true;
     }
 
     public ArrayList<String> loadUnits(Context context, String unitReference)
@@ -238,9 +248,10 @@ public class InputView extends ConstraintLayout implements TextWatcher, OnClickL
     }
 
     public void setUnit(String newUnit, boolean convertValue) {
+        String currentUnitStr = getUnit();
         if (convertValue) {
             double currentValue = getValue();
-            Unit currentUnit = Unit.valueOf(getUnit());
+            Unit currentUnit = Unit.valueOf(currentUnitStr);
             Unit desiredUnit = Unit.valueOf(newUnit);
 
             UnitConverter converter = currentUnit.getConverterTo(desiredUnit);
@@ -248,15 +259,21 @@ public class InputView extends ConstraintLayout implements TextWatcher, OnClickL
             setValue(convertedValue);
         }
 
-        previousUnit = getUnit();
+        previousUnit = currentUnitStr;
         unitView.setText(newUnit);
 
+    }
+
+    public void setClipboard()
+    {
+        ClipboardManager clipboard = (ClipboardManager)getContext().getSystemService(getContext().CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("value", valueView.getText().toString());
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(getContext(), "Copied to Clipboard", Toast.LENGTH_LONG).show();
     }
 
     public void setCustomEventListener(OnCustomEventListener eventListener) {
         customEventListener = eventListener;
         resetListeners(true, true);
     }
-
-
 }

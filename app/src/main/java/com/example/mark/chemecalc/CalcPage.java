@@ -10,10 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.*;
 import com.opencsv.CSVReader;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,7 +33,7 @@ public class CalcPage extends Fragment implements TextWatcher, OnCustomEventList
 
     public static final String title = "Calculations";
     public String description = "";
-    private InputView resultsView;
+    public InputView resultsView;
     private static UnitFormat unitFormat = UnitFormat.getInstance();
     private HashMap<Integer, String> previousUnits = new HashMap<Integer, String>();
 
@@ -47,7 +44,7 @@ public class CalcPage extends Fragment implements TextWatcher, OnCustomEventList
         unitFormat.label(CENTI(POISE), "cP");
         unitFormat.label(PASCAL.times(SECOND),"Pas");
         unitFormat.label(POUND_FORCE.divide(INCH.pow(2)), "psi");
-        unitFormat.label(POUND_FORCE.divide(INCH.pow(2)).times(2.306), "head");
+        unitFormat.label(POUND_FORCE.divide(INCH.pow(2)).times(2.306), "head"); //divide by unit-less specific gravity
     }
 
     public double getInputValue(Integer viewId, Integer unitsViewId, String desiredUnitStr)
@@ -264,5 +261,10 @@ public class CalcPage extends Fragment implements TextWatcher, OnCustomEventList
     @Override
     public void onChangeEvent() {
         performCalculation();
+    }
+
+    public void displayText(String message)
+    {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 }

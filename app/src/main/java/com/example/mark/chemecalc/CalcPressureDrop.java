@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.*;
 import org.jetbrains.annotations.Nullable;
 
+import javax.measure.Measure;
+import javax.measure.converter.UnitConverter;
+import javax.measure.unit.Unit;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -25,6 +29,8 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
     public HashMap<String, HashMap<String, String>> fittingsRef = new HashMap<String, HashMap<String, String>>();
 
     public TableLayout fittingsTable;
+
+    public InputView specific_gravity;
 
     private double velocity = 0.0;
     private double reynolds = 0.0;
@@ -337,6 +343,8 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
         EditText actual = thisView.findViewById(R.id.actualDiamEditText);
         actual.addTextChangedListener(this);
 
+        specific_gravity = thisView.findViewById(R.id.specific_gravity);
+
         if(fittingsRef.isEmpty())
         {
             loadAssets();
@@ -354,7 +362,69 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
         Spinner spinner = thisView.findViewById(R.id.fittingsSpinner);
         spinner.setAdapter(spinnerArrayAdapter);
 
+        resultsView.resetListeners(false,false);
+        resultsView.unitView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.w("test","clicked here!");
+                if (resultsView.unitsList == null || resultsView.unitsList.isEmpty()) {
+                    return;
+                }
+                String currentUnitStr = resultsView.getUnit();
+                int currentIx = resultsView.unitsList.indexOf(currentUnitStr) + 1;
+                if (currentIx >= resultsView.unitsList.size()) {
+                    currentIx = 0;
+                }
+                String newUnitStr = resultsView.unitsList.get(currentIx);
+                Log.w("test", currentUnitStr + "->" + newUnitStr);
+                if(currentUnitStr.equals("psi") && newUnitStr.equals("head")) {
+                    Log.w("test", "one");
+                    double convertedValue = convertPsiToHead(resultsView.getValue());
+                    resultsView.setValue(convertedValue);
+                    resultsView.previousUnit = currentUnitStr;
+                    resultsView.unitView.setText(newUnitStr);
+                }
+                else if(currentUnitStr.equals("head") && newUnitStr.equals("psi")) {
+                    Log.w("test", "two");
+                    double convertedValue = convertHeadToPsi(resultsView.getValue());
+                    resultsView.setValue(convertedValue);
+                    resultsView.previousUnit = currentUnitStr;
+                    resultsView.unitView.setText(newUnitStr);
+                }
+                else {
+                    Log.w("test", "three");
+                    resultsView.setUnit(newUnitStr);
+                }
+//                if (resultsView.customEventListener != null) {
+//                    resultsView.customEventListener.onChangeEvent();
+//                }
 
+            }
+            });
+    }
+
+    public double convertPsiToHead(Double value)
+    {
+        double convertedValue = 0.0;
+        double spec_grav = specific_gravity.getValue();
+        try {
+            convertedValue = value * 2.306 / spec_grav;
+        } catch (Exception err) {
+            displayText("Error during conversion");
+        }
+        return convertedValue;
+    }
+
+    public double convertHeadToPsi(Double value)
+    {
+        double convertedValue = 0.0;
+        double spec_grav = specific_gravity.getValue();
+        try {
+            convertedValue = (value / 2.306) * spec_grav;
+        } catch (Exception err) {
+            displayText("Error during conversion");
+        }
+        return convertedValue;
     }
 
     public void initTable(View thisView)
