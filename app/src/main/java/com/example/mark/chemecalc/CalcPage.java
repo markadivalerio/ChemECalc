@@ -36,7 +36,7 @@ public class CalcPage extends Fragment implements TextWatcher, OnCustomEventList
 
     public static final String title = "Calculations";
     public String description = "";
-    private TextView resultText;
+    private InputView resultsView;
     private static UnitFormat unitFormat = UnitFormat.getInstance();
     private HashMap<Integer, String> previousUnits = new HashMap<Integer, String>();
 
@@ -46,6 +46,8 @@ public class CalcPage extends Fragment implements TextWatcher, OnCustomEventList
         unitFormat.label(LITER.divide(MINUTE),"Lpm");
         unitFormat.label(CENTI(POISE), "cP");
         unitFormat.label(PASCAL.times(SECOND),"Pas");
+        unitFormat.label(POUND_FORCE.divide(INCH.pow(2)), "psi");
+        unitFormat.label(POUND_FORCE.divide(INCH.pow(2)).times(2.306), "head");
     }
 
     public double getInputValue(Integer viewId, Integer unitsViewId, String desiredUnitStr)
@@ -134,7 +136,15 @@ public class CalcPage extends Fragment implements TextWatcher, OnCustomEventList
 
     public void performCalculation()
     {
-        resultText.setText(calculate());
+        String val = calculate();
+        try
+        {
+            double dval = Double.valueOf(val);
+            resultsView.setValue(dval);
+        }
+        catch(Exception e) {
+            resultsView.setValue(val);
+        }
     }
 
     public String calculate()
@@ -175,18 +185,22 @@ public class CalcPage extends Fragment implements TextWatcher, OnCustomEventList
 
         initUnitConverter();
 
-        resultText = (TextView)this_view.findViewById(R.id.resultText);
-
         ConstraintLayout layout = (ConstraintLayout)this_view.findViewById(R.id.calcConstraintLayoutWrapper);
+
         for(int i=0; i < layout.getChildCount(); i++)
         {
             View thisView = layout.getChildAt(i);
             if(thisView instanceof ConstraintLayout) {
                 InputView iView = (InputView) ((ConstraintLayout)thisView).getChildAt(0);
-                Log.w("test","inputview");
-                InputView.calcPage = this;
-                iView.setCustomEventListener(this);
-                iView.resetListeners(this);
+                if(iView.getId() == R.id.results)
+                {
+                    resultsView = iView;
+                    resultsView.resetListeners(false,true);
+                }
+                else
+                {
+                    iView.setCustomEventListener(this);
+                }
             }
             if(thisView instanceof EditText) {
                 EditText editTextField = (EditText) thisView;
@@ -249,7 +263,6 @@ public class CalcPage extends Fragment implements TextWatcher, OnCustomEventList
 
     @Override
     public void onChangeEvent() {
-        Log.w("test", "here100");
         performCalculation();
     }
 }

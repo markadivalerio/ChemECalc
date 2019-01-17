@@ -48,7 +48,7 @@
                 app:layout_iv_units_reference=""
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                />
+        />
     </android.support.constraint.ConstraintLayout>
 
     <Spinner
@@ -107,35 +107,44 @@
             app:layout_constraintEnd_toStartOf="@+id/units_diam"
             app:layout_constraintStart_toEndOf="@+id/nomSizeSpinner" android:layout_marginStart="8dp"/>
 
-    <TextView
-            android:id="@+id/resultText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/resultLabel"
-            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="@+id/resultLabel"
-            app:layout_constraintBottom_toBottomOf="@+id/resultLabel"
-            app:layout_constraintHorizontal_bias="0.25"/>
-    <TextView
-            android:text="Pressure Drop ="
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/resultLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="88dp" android:textStyle="bold"
-            android:layout_marginBottom="32dp" app:layout_constraintBottom_toBottomOf="parent"
-    />
-    <!--<EditText-->
-            <!--android:layout_width="64dp"-->
-            <!--android:layout_height="36dp"-->
-            <!--android:inputType="numberDecimal"-->
-            <!--android:ems="10"-->
-            <!--android:id="@+id/pipeLenEditText"-->
-            <!--android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/schedSpinner"-->
-            <!--android:hint="Pipe Length" android:textSize="12sp"-->
-            <!--app:layout_constraintStart_toStartOf="@+id/schedSpinner"-->
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="114dp"
+            android:layout_height="36dp"
+            android:id="@+id/results_wrapper"
+            android:layout_marginBottom="24dp" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp">
+        <com.example.mark.chemecalc.InputView
+                android:id="@+id/results"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_iv_label="Pressure Drop"
+                app:layout_iv_value=""
+                app:layout_iv_units_reference="results"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+        />
+    </android.support.constraint.ConstraintLayout>
+    <!--<TextView-->
+    <!--android:id="@+id/resultText"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textSize="14sp"-->
+    <!--app:layout_constraintStart_toEndOf="@+id/resultLabel"-->
+    <!--android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"-->
+    <!--android:textStyle="bold"-->
+    <!--app:layout_constraintTop_toTopOf="@+id/resultLabel"-->
+    <!--app:layout_constraintBottom_toBottomOf="@+id/resultLabel"-->
+    <!--app:layout_constraintHorizontal_bias="0.25"/>-->
+    <!--<TextView-->
+    <!--android:text="Pressure Drop ="-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/resultLabel"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--android:layout_marginStart="88dp" android:textStyle="bold"-->
+    <!--android:layout_marginBottom="32dp" app:layout_constraintBottom_toBottomOf="parent"-->
     <!--/>-->
     <android.support.constraint.ConstraintLayout
             android:layout_width="114dp"
@@ -176,18 +185,7 @@
                 app:layout_constraintStart_toStartOf="parent"
         />
     </android.support.constraint.ConstraintLayout>
-    <!--<EditText-->
-            <!--android:layout_width="64dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:inputType="numberDecimal"-->
-            <!--android:ems="10"-->
-            <!--android:id="@+id/roughFacEditText"-->
-            <!--android:textSize="12sp"-->
-            <!--android:hint="Roughness F. (m)"-->
-            <!--app:layout_constraintBottom_toBottomOf="@+id/pipe_length_wrapper"-->
-            <!--app:layout_constraintTop_toTopOf="@+id/pipe_length_wrapper"-->
-            <!--app:layout_constraintStart_toStartOf="@+id/nomSizeSpinner"-->
-    <!--/>-->
+
     <ScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -195,7 +193,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/divider4"
             android:id="@+id/fittingsScrollView" app:layout_constraintTop_toBottomOf="@+id/divider3"
-            app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="0.0"
+            android:layout_marginBottom="16dp">
         <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -242,7 +241,7 @@
             android:background="?android:attr/listDivider"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/resultLabel" android:layout_marginBottom="8dp"/>
+            app:layout_constraintBottom_toTopOf="@+id/results_wrapper" android:layout_marginBottom="8dp"/>
 
     <TextView
             android:layout_width="137dp"
@@ -269,22 +268,4 @@
             app:layout_constraintBottom_toBottomOf="@+id/actualDiamEditText" app:layout_constraintEnd_toEndOf="parent"
             android:entries="@array/units_diam" android:spinnerMode="dialog" android:tag="unit_selector"
             android:layout_marginEnd="8dp"/>
-    <!--<Spinner-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:id="@+id/units_pipe_length" app:layout_constraintStart_toEndOf="@+id/pipeLenEditText"-->
-            <!--app:layout_constraintEnd_toEndOf="@+id/schedSpinner"-->
-            <!--app:layout_constraintTop_toTopOf="@+id/pipeLenEditText"-->
-            <!--app:layout_constraintBottom_toBottomOf="@+id/pipeLenEditText" android:entries="@array/units_pipe_length"-->
-            <!--android:spinnerMode="dialog" android:tag="unit_selector"/>-->
-    <!--<Spinner-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:id="@+id/units_roughness_factor" app:layout_constraintStart_toEndOf="@+id/roughFacEditText"-->
-            <!--app:layout_constraintTop_toTopOf="@+id/roughFacEditText"-->
-            <!--app:layout_constraintBottom_toBottomOf="@+id/roughFacEditText" android:spinnerMode="dialog"-->
-            <!--android:entries="@array/units_roughness_factor"-->
-            <!--android:tag="unit_selector" app:layout_constraintHorizontal_bias="1.0"-->
-            <!--app:layout_constraintVertical_bias="0.0"-->
-            <!--app:layout_constraintEnd_toEndOf="@+id/nomSizeSpinner"/>-->
 </android.support.constraint.ConstraintLayout>

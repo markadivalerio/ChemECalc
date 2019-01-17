@@ -134,7 +134,7 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
         TextView calcSummary = getView().findViewById(R.id.calcSummaryTextView);
         calcSummary.setText(calcSumText);
 
-        return other;
+        return String.valueOf(totalPDrop);
 
     }
 
