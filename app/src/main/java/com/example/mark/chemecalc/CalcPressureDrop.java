@@ -100,13 +100,7 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
         double visc = ((InputView) getView().findViewById(R.id.viscosity)).getValueIn("cP");
         double diam = getInputValue(R.id.actualDiamEditText, R.id.units_diam, "in");
         double pipeLen = ((InputView) getView().findViewById(R.id.pipe_length)).getValueIn("ft");
-        double roughnessF = ((InputView) getView().findViewById(R.id.roughness_factor)).getValueIn("mm");
-
-//        double pipeLenKM = getInputValue(R.id.pipeLenEditText, R.id.units_pipe_length, "km");
-//        String whatevah = "km = " + pipeLenKM;
-//        TextView fitSum = getView().findViewById(R.id.fittingSummaryTextView);
-//        fitSum.setText(whatevah);
-//        return whatevah;
+        double roughnessF = ((InputView) getView().findViewById(R.id.roughness_factor)).getValueIn("in");
 
         double density = calcDensity(specGrav);
         velocity = calcVelocity(flow, diam);
@@ -121,7 +115,6 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
 
         double totalPDrop = pPDrop + fPDrop + mPDrop;
 
-//                String calcSumText = "Re: " + sciNotation(reynolds);
         String calcSumText = "Re: " + sciNotation(reynolds) +
                 "\nFF: " +  sciNotation(frictionF);
 
@@ -136,6 +129,7 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
                + dcmlFmt.format(fPDrop) + "+"
                + dcmlFmt.format(mPDrop) + "="
                + dcmlFmt.format(totalPDrop);
+       Log.w("test", other);
 
         TextView calcSummary = getView().findViewById(R.id.calcSummaryTextView);
         calcSummary.setText(calcSumText);
@@ -184,13 +178,17 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
         A = (-2.457*ln((7/Re)^0.9+0.27*ε/D))^16
         B = (37530/Re)^16
          */
-//        diam = diam / 39.37; // converts inches to meters
-        diam = diam / 12.0; // inches to feet
+//        diam = diam / 39.37; // converts inches to feet
+        diam = diam / 12.0;
+        roughnessF = roughnessF / 12.0;
+        Log.w("test", "Roughness F (ft) = "+String.valueOf(roughnessF));
+        Log.w("test", "Diam (ft) = "+String.valueOf(diam));
         try
         {
             double left = Math.pow((7.0 / reynolds), 0.9);
             double right = (0.27 * roughnessF / diam);
-
+            Log.w("test", "Left = "+String.valueOf(left));
+            Log.w("test", "Right = " + String.valueOf(right));
             double a_val = Math.pow(
                 (-2.457 * Math.log(
                         (left + right)
@@ -202,6 +200,9 @@ public class CalcPressureDrop extends CalcPage implements AdapterView.OnItemSele
                     Math.pow((8.0 / reynolds), 12.0)
                     + 1 / Math.pow((a_val + b_val), 1.5), (1.0 / 12.0));
 
+            Log.w("test","a = "+String.valueOf(a_val));
+            Log.w("test","b = "+String.valueOf(b_val));
+            Log.w("test", "churchill FF = " + String.valueOf(churchillFF));
 //            TextView fitSum = getView().findViewById(R.id.fittingSummaryTextView);
 //            String sum = "a=" + sciNotation(a_val)
 //                    + "\nb=" + sciNotation(b_val);
